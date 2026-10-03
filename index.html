@@ -55,6 +55,52 @@ h2 {
   margin-top: 0;
 }
 
+.registration-title {
+  text-align: center;
+}
+
+.registration-box {
+  max-width: 500px;
+  margin: auto;
+}
+
+.registration-box label {
+  display: block;
+  color: #ddd;
+  margin: 12px 0 6px;
+  font-weight: bold;
+}
+
+.registration-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 7px;
+  border: 1px solid #444;
+  background: #222;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
+.whatsapp-button {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.whatsapp-button:hover {
+  background: #20bd5a;
+}
+
+.note {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -77,7 +123,7 @@ tr:nth-child(even) {
   background: #171717;
 }
 
-input {
+.score-input {
   width: 80px;
   padding: 8px;
   border-radius: 6px;
@@ -106,12 +152,6 @@ button:hover {
   background: #f0ce55;
 }
 
-.note {
-  color: #aaa;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
 .footer {
   text-align: center;
   color: #777;
@@ -127,7 +167,7 @@ button:hover {
     font-size: 12px;
   }
 
-  input {
+  .score-input {
     width: 55px;
   }
 
@@ -147,6 +187,41 @@ button:hover {
 
 <div class="container">
 
+  <!-- تسجيل الفرق -->
+  <div class="card">
+    <h2 class="registration-title">🏆 تسجيل الفريق</h2>
+
+    <div class="registration-box">
+
+      <label for="teamName">اسم الفريق</label>
+      <input
+        type="text"
+        id="teamName"
+        placeholder="اكتب اسم الفريق"
+      >
+
+      <label for="teamTag">تاج الفريق</label>
+      <input
+        type="text"
+        id="teamTag"
+        placeholder="اكتب تاج الفريق"
+      >
+
+      <button
+        class="whatsapp-button"
+        onclick="registerTeam()"
+      >
+        التسجيل عبر واتساب
+      </button>
+
+      <div class="note">
+        اكتب اسم الفريق والتاج ثم اضغط التسجيل عبر واتساب
+      </div>
+
+    </div>
+  </div>
+
+  <!-- الترتيب العام -->
   <div class="card">
     <h2>🏆 الترتيب العام</h2>
 
@@ -166,6 +241,7 @@ button:hover {
     </table>
   </div>
 
+  <!-- إدخال النتائج -->
   <div class="card">
     <h2>✏️ إدخال النتائج</h2>
 
@@ -182,7 +258,9 @@ button:hover {
       <tbody id="inputBody"></tbody>
     </table>
 
-    <button onclick="updateScores()">تحديث النتائج</button>
+    <button onclick="updateScores()">
+      تحديث النتائج
+    </button>
 
     <div class="note">
       النقاط الإجمالية = نقاط الترتيب + نقاط الإقصاءات + نقاط الفوز
@@ -197,116 +275,261 @@ button:hover {
 
 <script>
 
+/* =========================
+   تسجيل الفريق عبر واتساب
+========================= */
+
+function registerTeam() {
+
+  const teamName =
+    document.getElementById("teamName").value.trim();
+
+  const teamTag =
+    document.getElementById("teamTag").value.trim();
+
+  if (!teamName || !teamTag) {
+
+    alert("من فضلك اكتب اسم الفريق والتاج");
+
+    return;
+  }
+
+  const phone = "201050766830";
+
+  const message =
+`R2 Esports Team Registration
+
+Team Name: ${teamName}
+Team Tag: ${teamTag}`;
+
+  const whatsappURL =
+    "https://wa.me/" +
+    phone +
+    "?text=" +
+    encodeURIComponent(message);
+
+  window.open(whatsappURL, "_blank");
+}
+
+
+/* =========================
+   الفرق والنتائج
+========================= */
+
 const teams = [];
 
 for (let i = 1; i <= 20; i++) {
+
   teams.push({
+
     name: "Team " + i,
+
     wins: 0,
+
     placement: 0,
+
     kills: 0,
+
     total: 0
+
   });
+
 }
+
+
+/* =========================
+   إنشاء خانات النتائج
+========================= */
 
 function createInputs() {
 
-  const body = document.getElementById("inputBody");
+  const body =
+    document.getElementById("inputBody");
+
   body.innerHTML = "";
 
   teams.forEach((team, index) => {
 
     body.innerHTML += `
+
       <tr>
+
         <td>
+
           <input
             class="team-input"
             id="name-${index}"
-            value="${team.name}">
+            value="${team.name}"
+          >
+
         </td>
 
         <td>
+
           <input
+            class="score-input"
             type="number"
             min="0"
             id="win-${index}"
-            value="${team.wins}">
+            value="${team.wins}"
+          >
+
         </td>
 
         <td>
+
           <input
+            class="score-input"
             type="number"
             min="0"
             id="place-${index}"
-            value="${team.placement}">
+            value="${team.placement}"
+          >
+
         </td>
 
         <td>
+
           <input
+            class="score-input"
             type="number"
             min="0"
             id="kill-${index}"
-            value="${team.kills}">
+            value="${team.kills}"
+          >
+
         </td>
+
       </tr>
+
     `;
+
   });
+
 }
+
+
+/* =========================
+   تحديث النتائج
+========================= */
 
 function updateScores() {
 
   teams.forEach((team, index) => {
 
     team.name =
-      document.getElementById(`name-${index}`).value;
+      document.getElementById(
+        `name-${index}`
+      ).value;
 
     team.wins =
-      Number(document.getElementById(`win-${index}`).value);
+      Number(
+        document.getElementById(
+          `win-${index}`
+        ).value
+      );
 
     team.placement =
-      Number(document.getElementById(`place-${index}`).value);
+      Number(
+        document.getElementById(
+          `place-${index}`
+        ).value
+      );
 
     team.kills =
-      Number(document.getElementById(`kill-${index}`).value);
+      Number(
+        document.getElementById(
+          `kill-${index}`
+        ).value
+      );
 
     team.total =
       team.wins * 10 +
       team.placement +
       team.kills;
+
   });
 
-  teams.sort((a, b) => b.total - a.total);
+
+  teams.sort(
+    (a, b) =>
+      b.total - a.total
+  );
+
 
   renderRanking();
 
+
   window.scrollTo({
+
     top: 0,
+
     behavior: "smooth"
+
   });
+
 }
+
+
+/* =========================
+   عرض الترتيب
+========================= */
 
 function renderRanking() {
 
-  const body = document.getElementById("rankingBody");
+  const body =
+    document.getElementById(
+      "rankingBody"
+    );
 
   body.innerHTML = "";
+
 
   teams.forEach((team, index) => {
 
     body.innerHTML += `
+
       <tr>
-        <td>#${index + 1}</td>
-        <td>${team.name}</td>
-        <td>${team.wins}</td>
-        <td>${team.placement}</td>
-        <td>${team.kills}</td>
-        <td><strong>${team.total}</strong></td>
+
+        <td>
+          #${index + 1}
+        </td>
+
+        <td>
+          ${team.name}
+        </td>
+
+        <td>
+          ${team.wins}
+        </td>
+
+        <td>
+          ${team.placement}
+        </td>
+
+        <td>
+          ${team.kills}
+        </td>
+
+        <td>
+          <strong>
+            ${team.total}
+          </strong>
+        </td>
+
       </tr>
+
     `;
+
   });
+
 }
 
+
+/* تشغيل الموقع */
+
 createInputs();
+
 renderRanking();
 
 </script>
