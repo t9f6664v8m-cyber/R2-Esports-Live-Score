@@ -1,179 +1,154 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>R2 Esports Live Score</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#070707;
+color:#fff;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #080808;
-  color: white;
+header{
+padding:28px 15px;
+text-align:center;
+background:linear-gradient(180deg,#171717,#070707);
+border-bottom:2px solid #d4af37;
 }
 
-header {
-  text-align: center;
-  padding: 25px 10px;
-  background: linear-gradient(180deg, #171717, #080808);
-  border-bottom: 2px solid #c9a227;
+.logo{
+font-size:38px;
+font-weight:bold;
+color:#d4af37;
+letter-spacing:3px;
 }
 
-.logo {
-  font-size: 42px;
-  font-weight: bold;
-  color: #d4af37;
-  letter-spacing: 3px;
+.subtitle{
+color:#aaa;
+margin-top:6px;
 }
 
-.subtitle {
-  color: #aaa;
-  margin-top: 5px;
+.container{
+width:95%;
+max-width:1100px;
+margin:25px auto;
 }
 
-.container {
-  width: 95%;
-  max-width: 1100px;
-  margin: 25px auto;
+.card{
+background:#111;
+border:1px solid #333;
+border-radius:14px;
+padding:20px;
+margin-bottom:22px;
 }
 
-.card {
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 18px;
-  margin-bottom: 20px;
+h2{
+margin-top:0;
+color:#d4af37;
 }
 
-h2 {
-  color: #d4af37;
-  margin-top: 0;
+input{
+width:100%;
+padding:12px;
+margin:7px 0;
+background:#1d1d1d;
+border:1px solid #444;
+border-radius:7px;
+color:#fff;
+font-size:15px;
 }
 
-.registration-title {
-  text-align: center;
+button{
+background:#d4af37;
+color:#000;
+border:0;
+padding:12px 20px;
+border-radius:7px;
+font-weight:bold;
+margin-top:10px;
+cursor:pointer;
 }
 
-.registration-box {
-  max-width: 500px;
-  margin: auto;
+button:hover{
+background:#f0ce55;
 }
 
-.registration-box label {
-  display: block;
-  color: #ddd;
-  margin: 12px 0 6px;
-  font-weight: bold;
+.team-number{
+color:#d4af37;
+font-weight:bold;
 }
 
-.registration-box input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 7px;
-  border: 1px solid #444;
-  background: #222;
-  color: white;
-  text-align: center;
-  font-size: 16px;
+.preview-logo{
+width:55px;
+height:55px;
+object-fit:cover;
+border-radius:8px;
+border:1px solid #d4af37;
 }
 
-.whatsapp-button {
-  width: 100%;
-  background: #25D366;
-  color: white;
-  font-size: 16px;
-  margin-top: 20px;
+table{
+width:100%;
+border-collapse:collapse;
 }
 
-.whatsapp-button:hover {
-  background: #20bd5a;
+th{
+background:#d4af37;
+color:#000;
+padding:12px 6px;
 }
 
-.note {
-  color: #aaa;
-  font-size: 14px;
-  margin-top: 10px;
-  text-align: center;
+td{
+padding:10px 5px;
+text-align:center;
+border-bottom:1px solid #292929;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  overflow: hidden;
+tr:nth-child(even){
+background:#171717;
 }
 
-th {
-  background: #d4af37;
-  color: #000;
-  padding: 12px 6px;
+.result-logo{
+width:42px;
+height:42px;
+object-fit:cover;
+border-radius:7px;
+vertical-align:middle;
 }
 
-td {
-  padding: 11px 5px;
-  text-align: center;
-  border-bottom: 1px solid #292929;
+.team-cell{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
 }
 
-tr:nth-child(even) {
-  background: #171717;
+.rank{
+font-weight:bold;
+color:#d4af37;
 }
 
-.score-input {
-  width: 80px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background: #222;
-  color: white;
-  text-align: center;
+.small{
+color:#888;
+font-size:12px;
 }
 
-.team-input {
-  width: 150px;
+.no-teams{
+text-align:center;
+color:#777;
+padding:25px;
 }
 
-button {
-  background: #d4af37;
-  color: #000;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 7px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-button:hover {
-  background: #f0ce55;
-}
-
-.footer {
-  text-align: center;
-  color: #777;
-  padding: 25px;
-}
-
-@media (max-width: 600px) {
-  .logo {
-    font-size: 30px;
-  }
-
-  table {
-    font-size: 12px;
-  }
-
-  .score-input {
-    width: 55px;
-  }
-
-  .team-input {
-    width: 100px;
-  }
+@media(max-width:600px){
+.logo{font-size:28px}
+table{font-size:11px}
+.result-logo{width:32px;height:32px}
+.card{padding:12px}
 }
 </style>
 </head>
@@ -181,354 +156,389 @@ button:hover {
 <body>
 
 <header>
-  <div class="logo">R2 ESPORTS</div>
-  <div class="subtitle">LIVE SCORE</div>
+<div class="logo">R2 ESPORTS</div>
+<div class="subtitle">LIVE SCORE</div>
 </header>
 
 <div class="container">
 
-  <!-- تسجيل الفرق -->
-  <div class="card">
-    <h2 class="registration-title">🏆 تسجيل الفريق</h2>
+<!-- TEAM REGISTRATION -->
+<div class="card">
 
-    <div class="registration-box">
+<h2>📝 TEAM REGISTRATION</h2>
 
-      <label for="teamName">اسم الفريق</label>
-      <input
-        type="text"
-        id="teamName"
-        placeholder="اكتب اسم الفريق"
-      >
+<input id="teamName" placeholder="TEAM NAME">
 
-      <label for="teamTag">تاج الفريق</label>
-      <input
-        type="text"
-        id="teamTag"
-        placeholder="اكتب تاج الفريق"
-      >
+<input id="teamTag" placeholder="TEAM TAG">
 
-      <button
-        class="whatsapp-button"
-        onclick="registerTeam()"
-      >
-        التسجيل عبر واتساب
-      </button>
+<label class="small">TEAM LOGO</label>
+<input id="teamLogo" type="file" accept="image/*">
 
-      <div class="note">
-        اكتب اسم الفريق والتاج ثم اضغط التسجيل عبر واتساب
-      </div>
+<button onclick="registerTeam()">
+REGISTER TEAM
+</button>
 
-    </div>
-  </div>
-
-  <!-- الترتيب العام -->
-  <div class="card">
-    <h2>🏆 الترتيب العام</h2>
-
-    <table id="rankingTable">
-      <thead>
-        <tr>
-          <th>المركز</th>
-          <th>الفريق</th>
-          <th>فوز</th>
-          <th>ترتيب</th>
-          <th>إقصاءات</th>
-          <th>الإجمالي</th>
-        </tr>
-      </thead>
-
-      <tbody id="rankingBody"></tbody>
-    </table>
-  </div>
-
-  <!-- إدخال النتائج -->
-  <div class="card">
-    <h2>✏️ إدخال النتائج</h2>
-
-    <table>
-      <thead>
-        <tr>
-          <th>الفريق</th>
-          <th>فوز</th>
-          <th>نقاط الترتيب</th>
-          <th>الإقصاءات</th>
-        </tr>
-      </thead>
-
-      <tbody id="inputBody"></tbody>
-    </table>
-
-    <button onclick="updateScores()">
-      تحديث النتائج
-    </button>
-
-    <div class="note">
-      النقاط الإجمالية = نقاط الترتيب + نقاط الإقصاءات + نقاط الفوز
-    </div>
-  </div>
+<div id="registrationMessage"></div>
 
 </div>
 
-<div class="footer">
-  R2 Esports © 2026
+
+<!-- REGISTERED TEAMS -->
+<div class="card">
+
+<h2>👥 REGISTERED TEAMS</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>LOGO</th>
+<th>TEAM</th>
+<th>TAG</th>
+</tr>
+</thead>
+
+<tbody id="teamsBody"></tbody>
+
+</table>
+
 </div>
+
+
+<!-- ADMIN RESULTS -->
+<div class="card">
+
+<h2>🎮 ENTER GAME RESULT</h2>
+
+<input
+id="resultTeamNumber"
+type="number"
+min="1"
+placeholder="TEAM NUMBER">
+
+<input
+id="resultKills"
+type="number"
+min="0"
+placeholder="KILLS">
+
+<input
+id="resultPlace"
+type="number"
+min="1"
+placeholder="PLACE">
+
+<button onclick="addResult()">
+ADD RESULT
+</button>
+
+<div id="resultMessage"></div>
+
+</div>
+
+
+<!-- LIVE SCORE -->
+<div class="card">
+
+<h2>🏆 LIVE SCORE</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>#</th>
+<th>TEAM</th>
+<th>WINS</th>
+<th>PLACE</th>
+<th>ELIMS</th>
+<th>TOTAL</th>
+</tr>
+</thead>
+
+<tbody id="rankingBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
 
 <script>
 
-/* =========================
-   تسجيل الفريق عبر واتساب
-========================= */
-
-function registerTeam() {
-
-  const teamName =
-    document.getElementById("teamName").value.trim();
-
-  const teamTag =
-    document.getElementById("teamTag").value.trim();
-
-  if (!teamName || !teamTag) {
-
-    alert("من فضلك اكتب اسم الفريق والتاج");
-
-    return;
-  }
-
-  const phone = "201050766830";
-
-  const message =
-`R2 Esports Team Registration
-
-Team Name: ${teamName}
-Team Tag: ${teamTag}`;
-
-  const whatsappURL =
-    "https://wa.me/" +
-    phone +
-    "?text=" +
-    encodeURIComponent(message);
-
-  window.open(whatsappURL, "_blank");
-}
+let teams =
+JSON.parse(localStorage.getItem("r2Teams")) || [];
 
 
-/* =========================
-   الفرق والنتائج
-========================= */
+/* REGISTER TEAM */
 
-const teams = [];
+function registerTeam(){
 
-for (let i = 1; i <= 20; i++) {
+const name =
+document.getElementById("teamName").value.trim();
 
-  teams.push({
+const tag =
+document.getElementById("teamTag").value.trim();
 
-    name: "Team " + i,
+const logoInput =
+document.getElementById("teamLogo");
 
-    wins: 0,
+if(!name || !tag || !logoInput.files[0]){
 
-    placement: 0,
+document.getElementById("registrationMessage").innerHTML =
+"<p style='color:#e6c65c'>Please enter Team Name, Team Tag and Logo.</p>";
 
-    kills: 0,
-
-    total: 0
-
-  });
+return;
 
 }
 
+const reader = new FileReader();
 
-/* =========================
-   إنشاء خانات النتائج
-========================= */
+reader.onload = function(e){
 
-function createInputs() {
+const teamNumber = teams.length + 1;
 
-  const body =
-    document.getElementById("inputBody");
+const team = {
 
-  body.innerHTML = "";
+number:teamNumber,
 
-  teams.forEach((team, index) => {
+name:name,
 
-    body.innerHTML += `
+tag:tag,
 
-      <tr>
+logo:e.target.result,
 
-        <td>
+wins:0,
 
-          <input
-            class="team-input"
-            id="name-${index}"
-            value="${team.name}"
-          >
+place:0,
 
-        </td>
+kills:0,
 
-        <td>
+total:0
 
-          <input
-            class="score-input"
-            type="number"
-            min="0"
-            id="win-${index}"
-            value="${team.wins}"
-          >
+};
 
-        </td>
+teams.push(team);
 
-        <td>
+saveTeams();
 
-          <input
-            class="score-input"
-            type="number"
-            min="0"
-            id="place-${index}"
-            value="${team.placement}"
-          >
+renderTeams();
 
-        </td>
+renderRanking();
 
-        <td>
+document.getElementById("teamName").value="";
+document.getElementById("teamTag").value="";
+document.getElementById("teamLogo").value="";
 
-          <input
-            class="score-input"
-            type="number"
-            min="0"
-            id="kill-${index}"
-            value="${team.kills}"
-          >
+document.getElementById("registrationMessage").innerHTML =
+"<p style='color:#d4af37'>TEAM REGISTERED — TEAM #"+teamNumber+"</p>";
 
-        </td>
+};
 
-      </tr>
-
-    `;
-
-  });
+reader.readAsDataURL(logoInput.files[0]);
 
 }
 
 
-/* =========================
-   تحديث النتائج
-========================= */
+/* ADD RESULT */
 
-function updateScores() {
+function addResult(){
 
-  teams.forEach((team, index) => {
+const number =
+Number(document.getElementById("resultTeamNumber").value);
 
-    team.name =
-      document.getElementById(
-        `name-${index}`
-      ).value;
+const kills =
+Number(document.getElementById("resultKills").value);
 
-    team.wins =
-      Number(
-        document.getElementById(
-          `win-${index}`
-        ).value
-      );
+const place =
+Number(document.getElementById("resultPlace").value);
 
-    team.placement =
-      Number(
-        document.getElementById(
-          `place-${index}`
-        ).value
-      );
+const team =
+teams.find(t => t.number === number);
 
-    team.kills =
-      Number(
-        document.getElementById(
-          `kill-${index}`
-        ).value
-      );
+if(!team){
 
-    team.total =
-      team.wins * 10 +
-      team.placement +
-      team.kills;
+document.getElementById("resultMessage").innerHTML =
+"<p style='color:red'>TEAM NUMBER NOT FOUND</p>";
 
-  });
-
-
-  teams.sort(
-    (a, b) =>
-      b.total - a.total
-  );
-
-
-  renderRanking();
-
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
-
-  });
+return;
 
 }
 
 
-/* =========================
-   عرض الترتيب
-========================= */
+/*
+SCORING
+WIN = 10 POINTS
+PLACE = PLACEMENT POINTS
+KILL = 1 POINT
+*/
 
-function renderRanking() {
+team.kills = kills;
 
-  const body =
-    document.getElementById(
-      "rankingBody"
-    );
+team.place = place;
 
-  body.innerHTML = "";
+team.wins = place === 1 ? 1 : 0;
 
+team.total =
+(team.wins * 10) +
+place +
+kills;
 
-  teams.forEach((team, index) => {
+saveTeams();
 
-    body.innerHTML += `
+renderRanking();
 
-      <tr>
-
-        <td>
-          #${index + 1}
-        </td>
-
-        <td>
-          ${team.name}
-        </td>
-
-        <td>
-          ${team.wins}
-        </td>
-
-        <td>
-          ${team.placement}
-        </td>
-
-        <td>
-          ${team.kills}
-        </td>
-
-        <td>
-          <strong>
-            ${team.total}
-          </strong>
-        </td>
-
-      </tr>
-
-    `;
-
-  });
+document.getElementById("resultMessage").innerHTML =
+"<p style='color:#d4af37'>RESULT ADDED TO TEAM #"+number+"</p>";
 
 }
 
 
-/* تشغيل الموقع */
+/* SAVE */
 
-createInputs();
+function saveTeams(){
+
+localStorage.setItem(
+"r2Teams",
+JSON.stringify(teams)
+);
+
+}
+
+
+/* REGISTERED TEAMS */
+
+function renderTeams(){
+
+const body =
+document.getElementById("teamsBody");
+
+body.innerHTML="";
+
+if(teams.length===0){
+
+body.innerHTML=
+"<tr><td colspan='4' class='no-teams'>NO TEAMS REGISTERED</td></tr>";
+
+return;
+
+}
+
+teams.forEach(team=>{
+
+body.innerHTML += `
+
+<tr>
+
+<td class="team-number">
+#${String(team.number).padStart(2,"0")}
+</td>
+
+<td>
+<img
+src="${team.logo}"
+class="preview-logo">
+</td>
+
+<td>
+${team.name}
+</td>
+
+<td>
+${team.tag}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+/* RANKING */
+
+function renderRanking(){
+
+const body =
+document.getElementById("rankingBody");
+
+body.innerHTML="";
+
+const sorted =
+[...teams].sort((a,b)=>b.total-a.total);
+
+if(sorted.length===0){
+
+body.innerHTML=
+"<tr><td colspan='6' class='no-teams'>NO RESULTS YET</td></tr>";
+
+return;
+
+}
+
+sorted.forEach((team,index)=>{
+
+body.innerHTML += `
+
+<tr>
+
+<td class="rank">
+#${index+1}
+</td>
+
+<td>
+
+<div class="team-cell">
+
+<img
+src="${team.logo}"
+class="result-logo">
+
+<div>
+
+<strong>${team.name}</strong>
+
+<br>
+
+<span class="small">
+#${String(team.number).padStart(2,"0")} • ${team.tag}
+</span>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+${team.wins}
+</td>
+
+<td>
+${team.place}
+</td>
+
+<td>
+${team.kills}
+</td>
+
+<td>
+<strong>${team.total}</strong>
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+
+renderTeams();
 
 renderRanking();
 
