@@ -1082,12 +1082,10 @@ function renderScore(){
 /* ==========================================
    TEAMS
 ========================================== */
-
 function renderTeams(){
 
     const list =
         document.getElementById("teamsList");
-
 
     if(teams.length === 0){
 
@@ -1100,9 +1098,7 @@ function renderTeams(){
         return;
     }
 
-
     list.innerHTML = "";
-
 
     teams.forEach(team => {
 
@@ -1131,7 +1127,7 @@ function renderTeams(){
                      </div>`
                 }
 
-                <div>
+                <div style="flex:1;">
 
                     <h4>
                         ${team.name}
@@ -1146,6 +1142,12 @@ function renderTeams(){
                     </span>
 
                 </div>
+
+                <button
+                    class="danger-btn"
+                    onclick="deleteTeam(${team.id})">
+                    🗑️ حذف
+                </button>
 
             </div>
 
@@ -1347,6 +1349,27 @@ function renderAll(){
 ========================================== */
 
 renderAll();
+    function deleteTeam(teamId){
+
+    const confirmDelete =
+        confirm("هل أنت متأكد من حذف هذا التيم؟");
+
+    if(!confirmDelete){
+        return;
+    }
+
+    teams =
+        teams.filter(team => team.id !== teamId);
+
+    localStorage.setItem(
+        "r2Teams",
+        JSON.stringify(teams)
+    );
+
+    renderAll();
+
+    alert("تم حذف التيم بنجاح");
+}
 
 </script>
 
