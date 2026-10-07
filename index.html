@@ -3,152 +3,371 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+
 <title>R2 Esports Live Score</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#070707;
-color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#050505;
+    color:#fff;
+    min-height:100vh;
 }
 
 header{
-padding:28px 15px;
-text-align:center;
-background:linear-gradient(180deg,#171717,#070707);
-border-bottom:2px solid #d4af37;
+    background:linear-gradient(180deg,#111 0%,#050505 100%);
+    border-bottom:1px solid #292929;
+    padding:20px 15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
 .logo{
-font-size:38px;
-font-weight:bold;
-color:#d4af37;
-letter-spacing:3px;
+    width:65px;
+    height:65px;
+    border:2px solid #d4af37;
+    border-radius:50%;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:900;
+    color:#d4af37;
+    background:#080808;
 }
 
-.subtitle{
-color:#aaa;
-margin-top:6px;
+header h1{
+    margin-top:10px;
+    font-size:25px;
+    letter-spacing:2px;
+}
+
+header p{
+    color:#aaa;
+    margin-top:5px;
+    font-size:12px;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+nav button{
+    background:#111;
+    color:#ccc;
+    border:1px solid #333;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+nav button.active,
+nav button:hover{
+    color:#000;
+    background:#d4af37;
+    border-color:#d4af37;
 }
 
 .container{
-width:95%;
-max-width:1100px;
-margin:25px auto;
+    width:95%;
+    max-width:1200px;
+    margin:25px auto;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.title h2{
+    color:#d4af37;
+    font-size:24px;
+}
+
+.title p{
+    color:#888;
+    margin-top:6px;
+    font-size:13px;
 }
 
 .card{
-background:#111;
-border:1px solid #333;
-border-radius:14px;
-padding:20px;
-margin-bottom:22px;
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
 }
 
-h2{
-margin-top:0;
-color:#d4af37;
+.card h3{
+    color:#d4af37;
+    margin-bottom:15px;
+    font-size:18px;
 }
 
-input{
-width:100%;
-padding:12px;
-margin:7px 0;
-background:#1d1d1d;
-border:1px solid #444;
-border-radius:7px;
-color:#fff;
-font-size:15px;
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
 }
 
-button{
-background:#d4af37;
-color:#000;
-border:0;
-padding:12px 20px;
-border-radius:7px;
-font-weight:bold;
-margin-top:10px;
-cursor:pointer;
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
 }
 
-button:hover{
-background:#f0ce55;
+.form-group.full{
+    grid-column:1/-1;
 }
 
-.team-number{
-color:#d4af37;
-font-weight:bold;
+label{
+    color:#bbb;
+    font-size:13px;
 }
 
-.preview-logo{
-width:55px;
-height:55px;
-object-fit:cover;
-border-radius:8px;
-border:1px solid #d4af37;
+input,
+select{
+    width:100%;
+    background:#050505;
+    border:1px solid #333;
+    color:#fff;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
+input:focus,
+select:focus{
+    border-color:#d4af37;
 }
 
-th{
-background:#d4af37;
-color:#000;
-padding:12px 6px;
+.file-input{
+    padding:10px;
 }
 
-td{
-padding:10px 5px;
-text-align:center;
-border-bottom:1px solid #292929;
+.gold-btn{
+    width:100%;
+    background:#d4af37;
+    color:#000;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    font-weight:900;
+    cursor:pointer;
+    margin-top:15px;
 }
 
-tr:nth-child(even){
-background:#171717;
+.gold-btn:hover{
+    background:#f0cf55;
 }
 
-.result-logo{
-width:42px;
-height:42px;
-object-fit:cover;
-border-radius:7px;
-vertical-align:middle;
+.danger-btn{
+    background:#8b0000;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
 }
 
-.team-cell{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:8px;
+.score-wrapper{
+    overflow-x:auto;
+}
+
+.score-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+.score-table th{
+    background:#171717;
+    color:#d4af37;
+    padding:14px 8px;
+    border-bottom:2px solid #d4af37;
+    font-size:12px;
+}
+
+.score-table td{
+    padding:12px 8px;
+    text-align:center;
+    border-bottom:1px solid #252525;
+    font-size:13px;
+}
+
+.score-table tr:hover{
+    background:#111;
 }
 
 .rank{
-font-weight:bold;
-color:#d4af37;
+    color:#d4af37;
+    font-weight:900;
+    font-size:16px;
 }
 
-.small{
-color:#888;
-font-size:12px;
+.team-cell{
+    text-align:left !important;
+    min-width:180px;
 }
 
-.no-teams{
-text-align:center;
-color:#777;
-padding:25px;
+.team-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-@media(max-width:600px){
-.logo{font-size:28px}
-table{font-size:11px}
-.result-logo{width:32px;height:32px}
-.card{padding:12px}
+.team-logo{
+    width:40px;
+    height:40px;
+    border-radius:7px;
+    object-fit:cover;
+    background:#222;
+    border:1px solid #444;
+}
+
+.total{
+    color:#d4af37;
+    font-weight:900;
+    font-size:16px;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#777;
+}
+
+.team-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.team-card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:15px;
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.team-card img{
+    width:65px;
+    height:65px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid #d4af37;
+    background:#222;
+}
+
+.team-card h4{
+    color:#d4af37;
+    margin-bottom:5px;
+}
+
+.team-card p{
+    color:#aaa;
+    font-size:12px;
+}
+
+.member-box{
+    background:#080808;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:15px;
+    margin-top:10px;
+}
+
+.member-box h4{
+    color:#d4af37;
+    margin-bottom:12px;
+}
+
+.player-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.badge{
+    display:inline-block;
+    background:#191919;
+    border:1px solid #333;
+    color:#d4af37;
+    padding:4px 8px;
+    border-radius:5px;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.notice{
+    background:#111;
+    border-left:3px solid #d4af37;
+    padding:14px;
+    color:#aaa;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+footer{
+    text-align:center;
+    border-top:1px solid #222;
+    padding:25px;
+    margin-top:40px;
+    color:#666;
+    font-size:12px;
+}
+
+@media(max-width:700px){
+
+    header h1{
+        font-size:21px;
+    }
+
+    .form-grid,
+    .team-list,
+    .player-grid{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    nav{
+        gap:5px;
+    }
+
+    nav button{
+        padding:8px 10px;
+        font-size:11px;
+    }
 }
 </style>
 </head>
@@ -156,391 +375,978 @@ table{font-size:11px}
 <body>
 
 <header>
-<div class="logo">R2 ESPORTS</div>
-<div class="subtitle">LIVE SCORE</div>
+
+    <div class="logo">R2</div>
+
+    <h1>R2 ESPORTS</h1>
+
+    <p>LIVE SCORE • TOURNAMENT MANAGEMENT</p>
+
+    <nav>
+        <button class="active" onclick="showSection('score',this)">
+            LIVE SCORE
+        </button>
+
+        <button onclick="showSection('registration',this)">
+            REGISTRATION
+        </button>
+
+        <button onclick="showSection('teams',this)">
+            TEAMS
+        </button>
+
+        <button onclick="showSection('leader',this)">
+            LEADER
+        </button>
+
+        <button onclick="showSection('members',this)">
+            MEMBERS
+        </button>
+    </nav>
+
 </header>
 
-<div class="container">
 
-<!-- TEAM REGISTRATION -->
-<div class="card">
-
-<h2>📝 TEAM REGISTRATION</h2>
-
-<input id="teamName" placeholder="TEAM NAME">
-
-<input id="teamTag" placeholder="TEAM TAG">
-
-<label class="small">TEAM LOGO</label>
-<input id="teamLogo" type="file" accept="image/*">
-
-<button onclick="registerTeam()">
-REGISTER TEAM
-</button>
-
-<div id="registrationMessage"></div>
-
-</div>
+<main class="container">
 
 
-<!-- REGISTERED TEAMS -->
-<div class="card">
+<!-- ================= LIVE SCORE ================= -->
 
-<h2>👥 REGISTERED TEAMS</h2>
+<section id="score" class="section active">
 
-<table>
+    <div class="title">
+        <h2>OVERALL RANKINGS</h2>
+        <p>R2 Esports Live Score</p>
+    </div>
 
-<thead>
-<tr>
-<th>#</th>
-<th>LOGO</th>
-<th>TEAM</th>
-<th>TAG</th>
-</tr>
-</thead>
+    <div class="card">
 
-<tbody id="teamsBody"></tbody>
+        <div class="score-wrapper">
 
-</table>
+            <table class="score-table">
 
-</div>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>TEAM</th>
+                        <th>WINS</th>
+                        <th>PLACE</th>
+                        <th>ELIMS</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
 
+                <tbody id="scoreTable">
 
-<!-- ADMIN RESULTS -->
-<div class="card">
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No teams registered yet.
+                        </td>
+                    </tr>
 
-<h2>🎮 ENTER GAME RESULT</h2>
+                </tbody>
 
-<input
-id="resultTeamNumber"
-type="number"
-min="1"
-placeholder="TEAM NUMBER">
+            </table>
 
-<input
-id="resultKills"
-type="number"
-min="0"
-placeholder="KILLS">
+        </div>
 
-<input
-id="resultPlace"
-type="number"
-min="1"
-placeholder="PLACE">
+    </div>
 
-<button onclick="addResult()">
-ADD RESULT
-</button>
-
-<div id="resultMessage"></div>
-
-</div>
+</section>
 
 
-<!-- LIVE SCORE -->
-<div class="card">
+<!-- ================= REGISTRATION ================= -->
 
-<h2>🏆 LIVE SCORE</h2>
+<section id="registration" class="section">
 
-<table>
+    <div class="title">
+        <h2>TEAM REGISTRATION</h2>
+        <p>Register your team for R2 Esports</p>
+    </div>
 
-<thead>
-<tr>
-<th>#</th>
-<th>TEAM</th>
-<th>WINS</th>
-<th>PLACE</th>
-<th>ELIMS</th>
-<th>TOTAL</th>
-</tr>
-</thead>
+    <div class="notice">
+        Enter your team information, leader, co-leader and players.
+        After registration, the team will appear in the Teams section.
+    </div>
 
-<tbody id="rankingBody"></tbody>
+    <form id="registrationForm">
 
-</table>
+        <div class="card">
 
-</div>
+            <h3>TEAM INFORMATION</h3>
 
-</div>
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>TEAM NAME</label>
+                    <input
+                        type="text"
+                        id="teamName"
+                        placeholder="Enter team name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>TAG</label>
+                    <input
+                        type="text"
+                        id="teamTag"
+                        placeholder="R2"
+                        maxlength="8"
+                        required
+                    >
+                </div>
+
+                <div class="form-group full">
+                    <label>TEAM LOGO</label>
+                    <input
+                        type="file"
+                        id="teamLogo"
+                        class="file-input"
+                        accept="image/*"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LEADER -->
+
+        <div class="card">
+
+            <h3>LEADER</h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>NICKNAME</label>
+                    <input
+                        type="text"
+                        id="leaderName"
+                        placeholder="Leader nickname"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>PUBG ID</label>
+                    <input
+                        type="text"
+                        id="leaderId"
+                        placeholder="PUBG ID"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>DISCORD</label>
+                    <input
+                        type="text"
+                        id="leaderDiscord"
+                        placeholder="@discord"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CO LEADER -->
+
+        <div class="card">
+
+            <h3>CO-LEADER</h3>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>NICKNAME</label>
+                    <input
+                        type="text"
+                        id="coLeaderName"
+                        placeholder="Co-Leader nickname"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>PUBG ID</label>
+                    <input
+                        type="text"
+                        id="coLeaderId"
+                        placeholder="PUBG ID"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>DISCORD</label>
+                    <input
+                        type="text"
+                        id="coLeaderDiscord"
+                        placeholder="@discord"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEMBERS -->
+
+        <div class="card">
+
+            <h3>MEMBERS</h3>
+
+            <div class="member-box">
+
+                <h4>PLAYER 1</h4>
+
+                <div class="player-grid">
+
+                    <input
+                        type="text"
+                        id="player1Name"
+                        placeholder="Nickname"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player1Id"
+                        placeholder="PUBG ID"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player1Discord"
+                        placeholder="Discord"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="member-box">
+
+                <h4>PLAYER 2</h4>
+
+                <div class="player-grid">
+
+                    <input
+                        type="text"
+                        id="player2Name"
+                        placeholder="Nickname"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player2Id"
+                        placeholder="PUBG ID"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player2Discord"
+                        placeholder="Discord"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="member-box">
+
+                <h4>PLAYER 3</h4>
+
+                <div class="player-grid">
+
+                    <input
+                        type="text"
+                        id="player3Name"
+                        placeholder="Nickname"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player3Id"
+                        placeholder="PUBG ID"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="player3Discord"
+                        placeholder="Discord"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="gold-btn">
+            REGISTER TEAM
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- ================= TEAMS ================= -->
+
+<section id="teams" class="section">
+
+    <div class="title">
+        <h2>REGISTERED TEAMS</h2>
+        <p>Teams participating in the tournament</p>
+    </div>
+
+    <div id="teamsList" class="team-list">
+
+        <div class="empty">
+            No teams registered yet.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LEADER ================= -->
+
+<section id="leader" class="section">
+
+    <div class="title">
+        <h2>LEADER</h2>
+        <p>Team leaders</p>
+    </div>
+
+    <div id="leaderList">
+
+        <div class="empty">
+            No leaders registered yet.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MEMBERS ================= -->
+
+<section id="members" class="section">
+
+    <div class="title">
+        <h2>MEMBERS</h2>
+        <p>Registered team members</p>
+    </div>
+
+    <div id="membersList">
+
+        <div class="empty">
+            No members registered yet.
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+    R2 ESPORTS © 2026  
+    <br>
+    PUBG MOBILE ESPORTS
+
+</footer>
 
 
 <script>
 
-let teams =
-JSON.parse(localStorage.getItem("r2Teams")) || [];
+/* ==========================================
+   DATABASE
+========================================== */
 
-
-/* REGISTER TEAM */
-
-function registerTeam(){
-
-const name =
-document.getElementById("teamName").value.trim();
-
-const tag =
-document.getElementById("teamTag").value.trim();
-
-const logoInput =
-document.getElementById("teamLogo");
-
-if(!name || !tag || !logoInput.files[0]){
-
-document.getElementById("registrationMessage").innerHTML =
-"<p style='color:#e6c65c'>Please enter Team Name, Team Tag and Logo.</p>";
-
-return;
-
-}
-
-const reader = new FileReader();
-
-reader.onload = function(e){
-
-const teamNumber = teams.length + 1;
-
-const team = {
-
-number:teamNumber,
-
-name:name,
-
-tag:tag,
-
-logo:e.target.result,
-
-wins:0,
-
-place:0,
-
-kills:0,
-
-total:0
-
-};
-
-teams.push(team);
-
-saveTeams();
-
-renderTeams();
-
-renderRanking();
-
-document.getElementById("teamName").value="";
-document.getElementById("teamTag").value="";
-document.getElementById("teamLogo").value="";
-
-document.getElementById("registrationMessage").innerHTML =
-"<p style='color:#d4af37'>TEAM REGISTERED — TEAM #"+teamNumber+"</p>";
-
-};
-
-reader.readAsDataURL(logoInput.files[0]);
-
-}
-
-
-/* ADD RESULT */
-
-function addResult(){
-
-const number =
-Number(document.getElementById("resultTeamNumber").value);
-
-const kills =
-Number(document.getElementById("resultKills").value);
-
-const place =
-Number(document.getElementById("resultPlace").value);
-
-const team =
-teams.find(t => t.number === number);
-
-if(!team){
-
-document.getElementById("resultMessage").innerHTML =
-"<p style='color:red'>TEAM NUMBER NOT FOUND</p>";
-
-return;
-
-}
-
-
-/*
-SCORING
-WIN = 10 POINTS
-PLACE = PLACEMENT POINTS
-KILL = 1 POINT
-*/
-
-team.kills = kills;
-
-team.place = place;
-
-team.wins = place === 1 ? 1 : 0;
-
-team.total =
-(team.wins * 10) +
-place +
-kills;
-
-saveTeams();
-
-renderRanking();
-
-document.getElementById("resultMessage").innerHTML =
-"<p style='color:#d4af37'>RESULT ADDED TO TEAM #"+number+"</p>";
-
-}
-
-
-/* SAVE */
-
-function saveTeams(){
-
-localStorage.setItem(
-"r2Teams",
-JSON.stringify(teams)
+let teams = JSON.parse(
+    localStorage.getItem("r2Teams") || "[]"
 );
 
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+function showSection(sectionId, button){
+
+    document.querySelectorAll(".section")
+        .forEach(section => {
+            section.classList.remove("active");
+        });
+
+    document.getElementById(sectionId)
+        .classList.add("active");
+
+    document.querySelectorAll("nav button")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    renderAll();
 }
 
 
-/* REGISTERED TEAMS */
+/* ==========================================
+   IMAGE TO BASE64
+========================================== */
+
+function readImage(file){
+
+    return new Promise((resolve) => {
+
+        if(!file){
+            resolve("");
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            resolve(e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+/* ==========================================
+   REGISTRATION
+========================================== */
+
+document.getElementById("registrationForm")
+.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const logoFile =
+        document.getElementById("teamLogo").files[0];
+
+    const logo =
+        await readImage(logoFile);
+
+
+    const team = {
+
+        id: Date.now(),
+
+        name:
+            document.getElementById("teamName").value.trim(),
+
+        tag:
+            document.getElementById("teamTag").value.trim(),
+
+        logo: logo,
+
+        leader: {
+
+            name:
+                document.getElementById("leaderName").value.trim(),
+
+            id:
+                document.getElementById("leaderId").value.trim(),
+
+            discord:
+                document.getElementById("leaderDiscord").value.trim()
+
+        },
+
+        coLeader: {
+
+            name:
+                document.getElementById("coLeaderName").value.trim(),
+
+            id:
+                document.getElementById("coLeaderId").value.trim(),
+
+            discord:
+                document.getElementById("coLeaderDiscord").value.trim()
+
+        },
+
+        members: [
+
+            {
+                name:
+                    document.getElementById("player1Name").value.trim(),
+
+                id:
+                    document.getElementById("player1Id").value.trim(),
+
+                discord:
+                    document.getElementById("player1Discord").value.trim()
+            },
+
+            {
+                name:
+                    document.getElementById("player2Name").value.trim(),
+
+                id:
+                    document.getElementById("player2Id").value.trim(),
+
+                discord:
+                    document.getElementById("player2Discord").value.trim()
+            },
+
+            {
+                name:
+                    document.getElementById("player3Name").value.trim(),
+
+                id:
+                    document.getElementById("player3Id").value.trim(),
+
+                discord:
+                    document.getElementById("player3Discord").value.trim()
+            }
+
+        ],
+
+        wins: 0,
+
+        placement: 0,
+
+        kills: 0,
+
+        total: 0
+
+    };
+
+
+    teams.push(team);
+
+    localStorage.setItem(
+        "r2Teams",
+        JSON.stringify(teams)
+    );
+
+
+    alert(
+        "Team registered successfully!"
+    );
+
+
+    document.getElementById("registrationForm").reset();
+
+    renderAll();
+
+    showSection("teams");
+
+});
+
+
+/* ==========================================
+   SCORE
+========================================== */
+
+function renderScore(){
+
+    const table =
+        document.getElementById("scoreTable");
+
+    if(teams.length === 0){
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    No teams registered yet.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    const sorted =
+        [...teams].sort(
+            (a,b) => b.total - a.total
+        );
+
+
+    table.innerHTML = "";
+
+
+    sorted.forEach((team,index) => {
+
+        table.innerHTML += `
+
+            <tr>
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td class="team-cell">
+
+                    <div class="team-info">
+
+                        ${
+                            team.logo
+
+                            ?
+
+                            `<img
+                                src="${team.logo}"
+                                class="team-logo"
+                            >`
+
+                            :
+
+                            `<div class="team-logo"
+                                 style="
+                                 display:flex;
+                                 align-items:center;
+                                 justify-content:center;
+                                 color:#d4af37;
+                                 font-weight:bold;">
+                                 ${team.tag}
+                             </div>`
+                        }
+
+                        <div>
+
+                            <strong>
+                                ${team.name}
+                            </strong>
+
+                            <br>
+
+                            <span class="badge">
+                                ${team.tag}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td>
+                    ${team.wins}
+                </td>
+
+                <td>
+                    ${team.placement}
+                </td>
+
+                <td>
+                    ${team.kills}
+                </td>
+
+                <td class="total">
+                    ${team.total}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================
+   TEAMS
+========================================== */
 
 function renderTeams(){
 
-const body =
-document.getElementById("teamsBody");
-
-body.innerHTML="";
-
-if(teams.length===0){
-
-body.innerHTML=
-"<tr><td colspan='4' class='no-teams'>NO TEAMS REGISTERED</td></tr>";
-
-return;
-
-}
-
-teams.forEach(team=>{
-
-body.innerHTML += `
-
-<tr>
-
-<td class="team-number">
-#${String(team.number).padStart(2,"0")}
-</td>
-
-<td>
-<img
-src="${team.logo}"
-class="preview-logo">
-</td>
-
-<td>
-${team.name}
-</td>
-
-<td>
-${team.tag}
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
+    const list =
+        document.getElementById("teamsList");
 
 
-/* RANKING */
+    if(teams.length === 0){
 
-function renderRanking(){
+        list.innerHTML = `
+            <div class="empty">
+                No teams registered yet.
+            </div>
+        `;
 
-const body =
-document.getElementById("rankingBody");
+        return;
+    }
 
-body.innerHTML="";
 
-const sorted =
-[...teams].sort((a,b)=>b.total-a.total);
+    list.innerHTML = "";
 
-if(sorted.length===0){
 
-body.innerHTML=
-"<tr><td colspan='6' class='no-teams'>NO RESULTS YET</td></tr>";
+    teams.forEach(team => {
 
-return;
+        list.innerHTML += `
 
-}
+            <div class="team-card">
 
-sorted.forEach((team,index)=>{
+                ${
+                    team.logo
 
-body.innerHTML += `
+                    ?
 
-<tr>
+                    `<img src="${team.logo}">`
 
-<td class="rank">
-#${index+1}
-</td>
+                    :
 
-<td>
+                    `<div class="team-logo"
+                         style="
+                         display:flex;
+                         align-items:center;
+                         justify-content:center;
+                         color:#d4af37;
+                         font-weight:bold;
+                         font-size:18px;">
+                         ${team.tag}
+                     </div>`
+                }
 
-<div class="team-cell">
+                <div>
 
-<img
-src="${team.logo}"
-class="result-logo">
+                    <h4>
+                        ${team.name}
+                    </h4>
 
-<div>
+                    <p>
+                        TAG: ${team.tag}
+                    </p>
 
-<strong>${team.name}</strong>
+                    <span class="badge">
+                        REGISTERED
+                    </span>
 
-<br>
+                </div>
 
-<span class="small">
-#${String(team.number).padStart(2,"0")} • ${team.tag}
-</span>
+            </div>
 
-</div>
+        `;
 
-</div>
-
-</td>
-
-<td>
-${team.wins}
-</td>
-
-<td>
-${team.place}
-</td>
-
-<td>
-${team.kills}
-</td>
-
-<td>
-<strong>${team.total}</strong>
-</td>
-
-</tr>
-
-`;
-
-});
+    });
 
 }
 
 
-renderTeams();
+/* ==========================================
+   LEADERS
+========================================== */
 
-renderRanking();
+function renderLeaders(){
+
+    const list =
+        document.getElementById("leaderList");
+
+
+    if(teams.length === 0){
+
+        list.innerHTML = `
+            <div class="empty">
+                No leaders registered yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    teams.forEach(team => {
+
+        list.innerHTML += `
+
+            <div class="card">
+
+                <h3>
+                    ${team.name}
+                    <span class="badge">
+                        ${team.tag}
+                    </span>
+                </h3>
+
+                <div class="player-grid">
+
+                    <div class="member-box">
+
+                        <h4>LEADER</h4>
+
+                        <p>
+                            ${team.leader.name}
+                        </p>
+
+                        <span class="badge">
+                            ID: ${team.leader.id}
+                        </span>
+
+                        <br>
+
+                        <span class="badge">
+                            ${team.leader.discord || "No Discord"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="member-box">
+
+                        <h4>CO-LEADER</h4>
+
+                        <p>
+                            ${team.coLeader.name}
+                        </p>
+
+                        <span class="badge">
+                            ID: ${team.coLeader.id}
+                        </span>
+
+                        <br>
+
+                        <span class="badge">
+                            ${team.coLeader.discord || "No Discord"}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================
+   MEMBERS
+========================================== */
+
+function renderMembers(){
+
+    const list =
+        document.getElementById("membersList");
+
+
+    if(teams.length === 0){
+
+        list.innerHTML = `
+            <div class="empty">
+                No members registered yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    teams.forEach(team => {
+
+        list.innerHTML += `
+
+            <div class="card">
+
+                <h3>
+
+                    ${team.name}
+
+                    <span class="badge">
+                        ${team.tag}
+                    </span>
+
+                </h3>
+
+
+                ${team.members.map((player,index) => `
+
+                    <div class="member-box">
+
+                        <h4>
+                            PLAYER ${index + 1}
+                        </h4>
+
+                        <p>
+                            ${player.name}
+                        </p>
+
+                        <span class="badge">
+                            ID: ${player.id}
+                        </span>
+
+                        <br>
+
+                        <span class="badge">
+                            ${player.discord || "No Discord"}
+                        </span>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* ==========================================
+   RENDER EVERYTHING
+========================================== */
+
+function renderAll(){
+
+    renderScore();
+
+    renderTeams();
+
+    renderLeaders();
+
+    renderMembers();
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+renderAll();
 
 </script>
 
